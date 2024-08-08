@@ -38,4 +38,23 @@ object InboundOrchestratorRequests extends ServicesConfiguration {
       .headers(sentHeaders)
       .body(StringBody("<Body/>"))
       .check(status.is(202))
+
+  private val missingHeaders: Map[String, String] = Map(
+    "Content-Type" -> "application/xml"
+  )
+
+  val postBadRequest: HttpRequestBuilder =
+    http("Missing Header")
+      .post(s"$baseUrl$route")
+      .headers(missingHeaders)
+      .body(StringBody("<Body/>"))
+      .check(status.is(400))
+
+  val postWithoutBodyBadRequest: HttpRequestBuilder =
+    http("Missing Body")
+      .post(s"$baseUrl$route")
+      .headers(sentHeaders)
+      .body(StringBody(""))
+      .check(status.is(400))
+
 }
