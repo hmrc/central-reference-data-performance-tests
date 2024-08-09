@@ -21,6 +21,8 @@ import uk.gov.hmrc.perftests.crdl.requests.InboundOrchestratorRequests._
 
 class InboundOrchestratorSimulations extends PerformanceTestRunner {
   setup("post-valid-body", "Post Valid Body") withRequests postValidRequest
+  setup("missing-header", "Missing Header") withRequests postBadRequest
+  setup("missing-body", "Missing Body") withRequests postWithoutBodyBadRequest
 
   runSimulation()
 }
