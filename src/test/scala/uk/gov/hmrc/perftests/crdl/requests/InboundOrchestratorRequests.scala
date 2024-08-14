@@ -20,6 +20,7 @@ import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
+import uk.gov.hmrc.perftests.crdl.requests.InboundSoapMessage.xmlBody
 
 object InboundOrchestratorRequests extends ServicesConfiguration {
 
@@ -36,7 +37,7 @@ object InboundOrchestratorRequests extends ServicesConfiguration {
     http("Post a valid body")
       .post(s"$baseUrl$route")
       .headers(sentHeaders)
-      .body(StringBody("<Body/>"))
+      .body(StringBody(xmlBody))
       .check(status.is(202))
 
   private val missingHeaders: Map[String, String] = Map(
@@ -47,7 +48,7 @@ object InboundOrchestratorRequests extends ServicesConfiguration {
     http("Missing Header")
       .post(s"$baseUrl$route")
       .headers(missingHeaders)
-      .body(StringBody("<Body/>"))
+      .body(StringBody(xmlBody))
       .check(status.is(400))
 
   val postWithoutBodyBadRequest: HttpRequestBuilder =
