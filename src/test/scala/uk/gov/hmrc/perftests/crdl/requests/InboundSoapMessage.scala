@@ -29,4 +29,3 @@ object InboundSoapMessage {
                           |      </Body>
                           |    </MainMessage>""".stripMargin
 }
-
