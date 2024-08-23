@@ -18,11 +18,14 @@ package uk.gov.hmrc.perftests.crdl.simulations
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.crdl.requests.InboundOrchestratorRequests._
+import uk.gov.hmrc.perftests.crdl.requests.SdesCallbackController._
 
 class InboundOrchestratorSimulations extends PerformanceTestRunner {
-  setup("post-valid-body", "Post Valid Body") withRequests postValidRequest
-  setup("missing-header", "Missing Header") withRequests postBadRequest
-  setup("missing-body", "Missing Body") withRequests postWithoutBodyBadRequest
+  setup("post-valid-body", "Post Valid Inbound Body") withRequests postValidRequest
+  setup("missing-header", "Inbound Message with Missing Header") withRequests postBadRequest
+  setup("missing-body", "Inbound Message with Missing Body") withRequests postWithoutBodyBadRequest
+  setup("sdes-post-valid-body", "AV Scan Result with Body") withRequests postSuccessRequest
+  setup("sdes-failure-body", "AV Scan Result without Body") withRequests postFailureRequest
 
   runSimulation()
 }
