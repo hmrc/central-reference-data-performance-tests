@@ -16,6 +16,8 @@
 
 package uk.gov.hmrc.perftests.crdl.requests
 
+import java.util.UUID
+
 /*
  * Copyright 2024 HM Revenue & Customs
  *
@@ -33,14 +35,15 @@ package uk.gov.hmrc.perftests.crdl.requests
  */
 
 object InboundSdesMessage {
-  val successJsonBody: String =
-    """
-      |{
-      |"notification": "FileReceived",
-      |"filename": "32f2c4f7-c635-45e0-bee2-0bdd97a4a70d.zip",
-      |"checksumAlgorithm": "md5",
-      |"checksum": "894bed34007114b82fa39e05197f9eec",
-      |"correlationID": "32f2c4f7-c635-45e0-bee2-0bdd97a4a70d",
+  def successJsonBody: String                             = successJsonBodyFromString(UUID.randomUUID().toString)
+  def successJsonBodyFromString(identify: String): String =
+    s"""
+       |{
+       |"notification": "FileReceived",
+       |"filename": "32f2c4f7-c635-45e0-bee2-0bdd97a4a70d.zip",
+       |"checksumAlgorithm": "md5",
+       |"checksum": "894bed34007114b82fa39e05197f9eec",
+       |"correlationID": "$identify",
       |"dateTime": "2020-11-09T16:48:21.659Z",
       |"properties": [
       |{
