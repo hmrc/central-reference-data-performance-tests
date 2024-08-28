@@ -24,6 +24,7 @@ class InboundOrchestratorSimulations extends PerformanceTestRunner {
   setup("post-valid-body", "Post Valid Inbound Body") withRequests postValidRequest
   setup("missing-header", "Inbound Message with Missing Header") withRequests postBadRequest
   setup("missing-body", "Inbound Message with Missing Body") withRequests postWithoutBodyBadRequest
+  setup("sdes-post-valid-body-inbound", "AV Scan Result with Body") withRequests postSuccessRequestInbound
   setup("sdes-post-valid-body", "AV Scan Result with Body") withRequests postSuccessRequest
   setup("sdes-failure-body", "AV Scan Result without Body") withRequests postFailureRequest
 
