@@ -16,13 +16,18 @@
 
 package uk.gov.hmrc.perftests.crdl.simulations
 
-import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
-import uk.gov.hmrc.perftests.crdl.requests.InboundOrchestratorRequests._
+import io.gatling.core.Predef._
+import io.gatling.core.structure.ScenarioBuilder
+import uk.gov.hmrc.perftests.crdl.requests._
 
-class InboundOrchestratorSimulations extends PerformanceTestRunner {
-  setup("post-valid-body", "Post Valid Body") withRequests postValidRequest
-  setup("missing-header", "Missing Header") withRequests postBadRequest
-  setup("missing-body", "Missing Body") withRequests postWithoutBodyBadRequest
+import scala.concurrent.duration._
 
-  runSimulation()
+class InboundOrchestratorSimulations extends Simulation {
+  val scn: ScenarioBuilder = scenario("full journey")
+    .exec(InboundRequest.setupSession)
+    .exec(InboundRequest.receiveMessageWrapper)
+    .pause(1.second)
+    .exec(AVScanning.scanningSuccessful)
+
+  setUp(scn.inject(atOnceUsers(1))).protocols(OrchestratorCommon.httpProtocol)
 }

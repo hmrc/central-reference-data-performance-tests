@@ -16,17 +16,12 @@
 
 package uk.gov.hmrc.perftests.crdl.requests
 
-import java.util.UUID
+import io.gatling.core.Predef._
+import io.gatling.http.Predef._
+import io.gatling.http.protocol.HttpProtocolBuilder
+import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
-object InboundSoapMessage {
-  val xmlBody: String = s"""<MainMessage>
-                          |      <Body>
-                          |        <TaskIdentifier>780912</TaskIdentifier>
-                          |        <AttributeName>ReferenceData</AttributeName>
-                          |        <MessageType>gZip</MessageType>
-                          |        <IncludedBinaryObject>${UUID.randomUUID()}</IncludedBinaryObject>
-                          |        <MessageSender>CS/RD2</MessageSender>
-                          |      </Body>
-                          |    </MainMessage>""".stripMargin
+object OrchestratorCommon extends ServicesConfiguration {
+  val httpProtocol: HttpProtocolBuilder =
+    http.baseUrl(baseUrlFor("central-reference-data-inbound-orchestrator"))
 }
-
