@@ -33,19 +33,19 @@ Do **NOT** run a full performance test against staging from your local machine. 
 Run smoke test (locally) as follows:
 
 ```bash
-sbt -Dperftest.runSmokeTest=true -DrunLocal=true gatling:test
+./run_tests.sh
 ```
 
 Run full performance test (locally) as follows:
 
 ```bash
-sbt -DrunLocal=true gatling:test
+./run_tests.sh -f
 ```
 
 Run smoke test (staging) as follows:
 
 ```bash
-sbt -Dperftest.runSmokeTest=true -DrunLocal=false gatling:test
+./run_tests.sh -s
 ```
 
 ## Scalafmt

@@ -14,20 +14,14 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.perftests.crdl.simulations
+package uk.gov.hmrc.perftests.crdl.requests
 
 import io.gatling.core.Predef._
-import io.gatling.core.structure.ScenarioBuilder
-import uk.gov.hmrc.perftests.crdl.requests._
+import io.gatling.http.Predef._
+import io.gatling.http.protocol.HttpProtocolBuilder
+import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
-import scala.concurrent.duration._
-
-class InboundOrchestratorSimulations extends Simulation {
-  val scn: ScenarioBuilder = scenario("full journey")
-    .exec(InboundRequest.setupSession)
-    .exec(InboundRequest.receiveMessageWrapper)
-    .pause(1.second)
-    .exec(AVScanning.scanningSuccessful)
-
-  setUp(scn.inject(atOnceUsers(1))).protocols(OrchestratorCommon.httpProtocol)
+object OrchestratorCommon extends ServicesConfiguration {
+  val httpProtocol: HttpProtocolBuilder =
+    http.baseUrl(baseUrlFor("central-reference-data-inbound-orchestrator"))
 }
