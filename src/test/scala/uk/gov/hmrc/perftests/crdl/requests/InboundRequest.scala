@@ -23,15 +23,27 @@ import io.gatling.http.Predef._
 import java.util.UUID
 
 object InboundRequest {
-  def inbound(session: Session): String = s"""<MainMessage>
-      <Body>
-        <TaskIdentifier>${session("TaskID").as[String]}</TaskIdentifier>
-        <AttributeName>ReferenceData</AttributeName>
-        <MessageType>gZip</MessageType>
-        <IncludedBinaryObject>${session("CorrelationId").as[String]}</IncludedBinaryObject>
-        <MessageSender>CS/RD2</MessageSender>
-      </Body>
-    </MainMessage>""".stripMargin
+  def inbound(session: Session): String =
+    s"""
+       |<S:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope" xmlns:S="http://www.w3.org/2003/05/soap-envelope">
+       |      <S:Header>
+       |        <Action xmlns="http://www.w3.org/2005/08/addressing">CCN2.Service.Customs.Default.CSRD.ReferenceDataSubmissionResultReceiverCBS/ReceiveReferenceDataSubmissionResult</Action>
+       |      </S:Header>
+       |      <S:Body>
+       |        <ReceiveReferenceDataSubmissionResult>
+       |          <MessageHeader>
+       |            <messageID>testMessageId123</messageID>
+       |            <messageName>test message name</messageName>
+       |            <sender>CS/RD2</sender>
+       |            <recipient>DPS</recipient>
+       |            <timeCreation>2023-10-03T16:00:00</timeCreation>
+       |          </MessageHeader>
+       |          <TaskIdentifier>${session("TaskID").as[String]}</TaskIdentifier>
+       |          <IncludedBinaryObject>${session("CorrelationId").as[String]}</IncludedBinaryObject>
+       |        </ReceiveReferenceDataSubmissionResult>
+       |      </S:Body>
+       |    </S:Envelope>
+       |""".stripMargin
 
   def setupSession: ChainBuilder = {
     exec(session => {
