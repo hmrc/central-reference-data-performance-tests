@@ -19,7 +19,6 @@ package uk.gov.hmrc.perftests.crdl.requests
 import io.gatling.core.Predef._
 import io.gatling.core.structure.ChainBuilder
 import io.gatling.http.Predef._
-import io.netty.util.Version.identify
 
 import java.util.UUID
 
@@ -42,8 +41,8 @@ object InboundRequest {
        |            <v2:recipient>DPS</v2:recipient>
        |            <v2:timeCreation>2023-10-03T16:00:00</v2:timeCreation>
        |          </v41:MessageHeader>
-       |          <v41:TaskIdentifier>TASKID12345</v41:TaskIdentifier>
-       |          <v41:ReceiveReferenceDataRequestResult>$identify</v41:ReceiveReferenceDataRequestResult>
+       |           <v41:TaskIdentifier>${session("TaskID").as[String]}</v41:TaskIdentifier>
+       |          <v41:ReceiveReferenceDataRequestResult>${session("CorrelationId").as[String]}</v41:ReceiveReferenceDataRequestResult>
        |        </v4:ReceiveReferenceDataReqMsg>
        |      </soap:Body>
        |    </soap:Envelope>""".stripMargin
