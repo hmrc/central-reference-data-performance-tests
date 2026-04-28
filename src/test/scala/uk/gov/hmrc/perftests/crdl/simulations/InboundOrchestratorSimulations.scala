@@ -29,5 +29,12 @@ class InboundOrchestratorSimulations extends Simulation {
     .pause(1.second)
     .exec(AVScanning.scanningSuccessful)
 
-  setUp(scn.inject(atOnceUsers(1))).protocols(OrchestratorCommon.httpProtocol)
+  val subscriptionDeltaScn: ScenarioBuilder = scenario("subscription delta journey")
+    .exec(SubscriptionDeltaRequest.setupSession)
+    .exec(SubscriptionDeltaRequest.sendSubscriptionDelta)
+
+  setUp(
+    scn.inject(atOnceUsers(1)),
+    subscriptionDeltaScn.inject(atOnceUsers(1))
+  ).protocols(OrchestratorCommon.httpProtocol)
 }
