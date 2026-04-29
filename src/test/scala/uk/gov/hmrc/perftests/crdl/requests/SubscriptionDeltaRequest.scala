@@ -29,7 +29,6 @@ object SubscriptionDeltaRequest {
     Source.fromResource("fixtures/subscription-delta-request.xml").mkString
 
   def subscriptionDelta(session: Session): String = {
-    println(s"************************ uuid: ${session("SubscriptionMessageID").as[String]}")
     xmlTemplate.replace(
       "uuid:3a61bf1c-1062-4457-98c7-f7a6945cb215",
       s"uuid:${session("SubscriptionMessageID").as[String]}"
