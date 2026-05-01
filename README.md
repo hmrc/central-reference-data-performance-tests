@@ -1,6 +1,4 @@
 
-Central Reference Data Performance Tests Link: https://github.com/hmrc/central-reference-data-performance-tests
-
 # central-reference-data-performance-tests
 
 Performance test suite for the `Central Reference Data Library`, using [performance-test-runner](https://github.com/hmrc/performance-test-runner) under the hood.
@@ -11,9 +9,8 @@ Performance test suite for the `Central Reference Data Library`, using [performa
 
 Start Mongo Docker container as follows:
 
-```bash
-docker run --rm -d -p 27017:27017 --name mongo mongo:4.4
-```
+Follow the Developer setup instructions in the MDTP Handbook for [MongoDB](https://docs.tax.service.gov.uk/mdtp-handbook/documentation/developer-set-up/set-up-mongodb.html).
+Make sure you have MongoDB 7.x or later.
 
 Start `CRDL` services as follows:
 
